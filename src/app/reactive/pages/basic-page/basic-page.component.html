@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <form autocomplete="off" [formGroup]="myForm">
       <!-- Campo de producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Producto</label>
@@ -12,12 +12,14 @@
             type="text"
             class="form-control"
             placeholder="Nombre del producto"
+            formControlName="name"
           />
-
+          @if(isValidField('name')){
           <span class="form-text text-danger">
             <!-- Debe de ser de 3 letras -->
-            error message
+            {{ getFieldError("name") }}
           </span>
+          }
         </div>
       </div>
 
@@ -29,6 +31,7 @@
             type="number"
             class="form-control"
             placeholder="Precio del producto"
+            formControlName="price"
           />
           <span class="form-text text-danger">
             El precio debe de ser 0 o mayor
@@ -44,6 +47,7 @@
             type="number"
             class="form-control"
             placeholder="Existencias del producto"
+            formControlName="inStorage"
           />
 
           <span class="form-text text-danger">
@@ -66,21 +70,28 @@
 <div class="row">
   <div class="col">
     <span>Valid</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <pre>{{ myForm.valid | json }}</pre>
+    <!-- validaciones -->
 
     <span>Pristine</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <pre>{{ myForm.pristine | json }}</pre>
+    <!--  pristine menciona true si el formulario no se ha tocado desde que se envio al usuario-->
 
     <span>Touched</span>
-    <pre>{{ "objeto" | json }}</pre>
-
+    <pre>{{ myForm.touched | json }}</pre>
+    <!--  touched menciona false si el formulario no ha sido modificado-->
     <span>Value</span>
-    <pre>{{ "objeto" | json }}</pre>
-
+    <pre>{{ myForm.value | json }}</pre>
+    <!-- valores del formulario  -->
     <span>Precio</span>
-    <pre>{{ "objeto" | json }}</pre>
-
+    <pre>{{ myForm.controls["price"].value | json }}</pre>
+    <!-- valor del precio  -->
     <span>Producto</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <pre>{{ myForm.controls["name"].value | json }}</pre>
+    <!-- valor del nombre del producto  -->
+
+    <span>Errores - nombre producto</span>
+    <pre>{{ myForm.controls["name"].errors | json }}</pre>
+    <!-- muestra el error de validacion en el input -->
   </div>
 </div>
